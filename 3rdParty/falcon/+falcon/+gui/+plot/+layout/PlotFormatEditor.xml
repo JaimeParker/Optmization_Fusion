@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<merge Spacing="4"
+       Heights="24,24,24,24">
+
+    <!-- title edit, text and format checkbox -->
+    <include Layout="InterpretedTextField" Title="Title" Property="Title" />
+
+    <!-- xlabel edit, text and format checkbox -->
+    <include Layout="InterpretedTextField" Title="X Label" Property="XLabel" />
+
+    <!-- ylabel edit, text and format checkbox -->
+    <include Layout="InterpretedTextField" Title="Y Label" Property="YLabel" />
+
+    <!-- legend edit, placement or "none" selection -->
+    <uiextras.HBox Widths="50,-2,-1" Spacing="4">
+        <include Layout="Label" Title="Legend" />
+        <uicontrol Style="popupmenu"
+                   InjectAs="LegendPosition"
+                   String:eval="falcon.gui.plot.config.Plot.LEGEND_POSITIONS" />
+        <uicontrol Style="popupmenu"
+                   InjectAs="LegendInterpreter"
+                   String:eval="falcon.gui.plot.config.Plot.INTERPRETERS" />
+    </uiextras.HBox>
+</merge>

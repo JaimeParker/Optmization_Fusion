@@ -1,0 +1,18 @@
+classdef {{ name }} < matlab.System
+    % model interface created by falcon.m
+
+    properties (Constant)
+        % insert constants here to access via obj.ConstantName
+    end
+
+    methods (Access = protected)
+        function [{{ strjoin(outputs, ', ') }}] = stepImpl(obj, {{ strjoin(inputs, ', ') }})
+            % model interface created by falcon.m
+
+            % TODO calculate the outputs
+            warning('TODO - model {{ name }} is not implemented yet');
+            {% for output in outputs %}{{ output }} = 0;
+            {% end %}
+        end
+    end
+end

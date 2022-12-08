@@ -1,0 +1,21 @@
+function solution = solveproblem(problem)
+    % Compute the optimal controls for the problem numerically.
+
+    % Inititalize either the 'ipopt' or 'snopt' solver with the problem instance.
+    % After solving, you can use the return values to analyze the quality of the
+    % solution, or you can extract solution values directly from the problem.
+    solver = falcon.solver.{{ solver }}(problem);
+    {% if strcmp(solver, 'ipopt') %}
+    solver.setLinearSolver('{{ linsolver }}');{% end %}
+    solver.Options.MajorIterLimit = 500;
+    solver.Options.MajorFeasTol   = 1e-5;
+    solver.Options.MajorOptTol    = 1e-5;
+
+    % Invoke the numerical solver. This is the cost intensive part.
+    solution = struct();
+    [ ...
+        solution.z_opt, solution.F_opt, solution.status, ...
+        solution.lambda, solution.mu, solution.zl, solution.zu ...
+    ] = solver.Solve();
+
+end

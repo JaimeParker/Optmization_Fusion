@@ -1,0 +1,20 @@
+In order to use Snopt, please place all
+Snopt binaries, m-files, mex-files, and related
+code in the folder 
+
+\vendor\snopt\SNOPT
+
+that you must create. This folder should can contain all files
+that were distributed to you by Snopt.
+
+The provided function handles in the folder
+\vendor\snopt\
+will automatically make the correct call to the Snopt class
+in the solver folder.
+So do NOT change them.
+
+Within FALCON.m, you can call Snopt similar to Ipopt by using:
+solver = falcon.solver.snopt(problem);
+
+FALCON.m will automatically add Snopt to your path, if you do
+not want to do it by hand.

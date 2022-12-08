@@ -1,0 +1,17 @@
+
+addpath steps
+
+% step 1: load states, controls, outputs, parameters...
+vars = allvariables();
+
+% step 2: build a model handle
+modelfcn = buildmodel(vars);
+
+% step 3: init the problem with phases and discretization
+problem = createproblem(modelfcn, vars);
+
+% step 4: solve the problem
+solution = solveproblem(problem);
+
+% step 5: plot the result
+viewsolution(problem, solution);

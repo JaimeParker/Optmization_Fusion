@@ -1,0 +1,9 @@
+function states = states()
+    % The states for the models and constraints. It should be a column vector of falcon.State
+    % objects. You can specify lower and upper bounds, and if necessary tune scaling and
+    % offset to improve numerical performance manually. You may omit scaling and offset.
+
+    states = [{%for state in states %}
+        falcon.State('{{ state }}', -inf, +inf, 1, 0);{% end %}
+    ];
+end

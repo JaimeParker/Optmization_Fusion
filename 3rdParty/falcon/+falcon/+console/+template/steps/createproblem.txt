@@ -1,0 +1,69 @@
+function problem = createproblem(modelfcn, vars)
+    % Setup and bake the problem handle.
+
+    % Discretize the time for the first phase. Divide the time interval between [0, finalTime]
+    % into a series of equally spaced steps. If you are using more than one phase, the
+    % relative time may e.g. run within [0, 0.5] and [0.5, 1] respectively.
+    tau = linspace(0, 1, 101);
+
+    % The problem handle stores all phases, models and constraints. It is the core of
+    % the falcon toolbox. Use it to add phases, constraints etc, then Bake() it and
+    % Solve() it. Once the problem is baked, you cannot edit it any more.
+    problem = falcon.Problem('{{ name }}');
+
+    % Falcon solves (multiple) phases. Each can have a different model, states, discretization
+    % and time interval. Specify the model as a function handle with states, controls, and
+    % parameters as inputs, which computes the first order derivatives (and outputs).
+    startTime = 0;{% if any(strcmp(type, {'mayer', 'bolza'})) %}
+    finalTime = findobj(vars.parameters, 'Name', '{{ iif(phases == 1, 'FinalTime', 'PhaseTime12') }}');{% else %}
+    finalTime = 10;{% end %}
+    {{ iif (phases == 1, 'phase', 'phase1') }} = problem.addNewPhase(modelfcn, vars.states, tau, startTime, finalTime);
+
+    % Define the discretization grid for the controls in the phase. Controls can have a
+    % discretization scheme different from the states, e.g. the control changes only
+    % every n-th time step. For now, specify the same 'tau' as for the states.
+    {{ iif (phases == 1, 'phase', 'phase1') }}.addNewControlGrid(vars.controls, tau);{% if ~isempty(outputs) %}
+
+    % This model has outputs. Tell falcon, the second output value from
+    % the model handle corresponds to the output vector specified here.
+    % You can omit this line if you do not use outputs.
+    {{ iif (phases == 1, 'phase', 'phase1') }}.Model.setModelOutputs(vars.outputs);{% end %}{% if ~isempty(parameters) %}
+
+    % This model has parameters. Tell falcon, there will be more input parameters to the model
+    % handle. Do not include PhaseTimeXX and FinalTime parameters here while unused. The
+    % list needs to match the list of parameter inputs for the actual model handle.
+    {{ iif (phases == 1, 'phase', 'phase1') }}.Model.setModelParameters(vars.parameters({{ iif(any(strcmp(type, {'mayer', 'bolza'})), phases + 1, 1) }}:end));{% end %}
+
+    % Specify the initial and final boundary constraints. Here they are equality constraints.
+    % You can use a third paramater to specify (states, lowerBound, upperBound) instead.
+    % Boundaries can be specified on all or just a subset of 'states'.
+    {{ iif (phases == 1, 'phase', 'phase1') }}.setInitialBoundaries(states, [{{ strjoin(repmat({'0'}, size(states)), '; ') }}]);
+    {{ iif (phases == 1, 'phase', 'phase1') }}.setFinalBoundaries(states, [{{ strjoin(repmat({'0'}, size(states)), '; ') }}]);
+    {% if any(strcmp(type, {'lagrange', 'bolza'})) %}
+    % For a {{ [upper(type(1)) type(2:end)] }} problem, there is an integral cost term. The function computing
+    % that cost for each time step is attached to each phase. Different phases can
+    % have different costs. Also specify what output to expect.
+    {{ iif (phases == 1, 'phase', 'phase1') }}.addNewLagrangeCost(@lagrangecost, falcon.Cost('cost'));{% end %}
+    {% for phase in 2:phases %}
+    startTime = {% if any(strcmp(type, {'mayer', 'bolza'})) %}findobj(vars.parameters, 'Name', 'PhaseTime{{ phase - 1 }}{{ phase }}');{% else %}{{(phase-1)/phases*10}};{% end %}
+    finalTime = {% if any(strcmp(type, {'mayer', 'bolza'})) %}findobj(vars.parameters, 'Name', '{{ iif(phase == phases, 'FinalTime', sprintf('PhaseTime%d%d', phase, phase+1)) }}');{% else %}{{phase/phases*10}};{% end %}
+    phase{{ phase }} = problem.addNewPhase(modelfcn, vars.states, tau, startTime, finalTime);
+    phase{{ phase }}.addNewControlGrid(vars.controls, tau);{% if ~isempty(outputs) %}
+    phase{{ phase }}.Model.setModelOutputs(vars.outputs);{% end %}{% if ~isempty(parameters) %}
+    phase{{ phase }}.Model.setModelParameters(vars.parameters({{ iif(any(strcmp(type, {'mayer', 'bolza'})), phases + 1, 1) }}:end));{% end %}
+    phase{{ phase }}.setInitialBoundaries(states, [{{ strjoin(repmat({'0'}, size(states)), '; ') }}]);
+    phase{{ phase }}.setFinalBoundaries(states, [{{ strjoin(repmat({'0'}, size(states)), '; ') }}]);{% if any(strcmp(type, {'lagrange', 'bolza'})) %}
+    phase{{ phase }}.addNewLagrangeCost(@lagrangecost, falcon.Cost('cost'));{% end %}
+    {% end %}{% if any(strcmp(type, {'mayer', 'bolza'})) %}
+    % For a {{ [upper(type(1)) type(2:end)] }} problem, there is a cost term on the initial (and/or)
+    % final states. If you just need a time minimal problem, use can use
+    % a simpler formulation and add the 'finalTime' as a cost.
+    problem.addNewParameterCost(finalTime);{% end %}
+
+    % Prepare the problem for solving. Bake() will prepare the discrete formulation
+    % of the problem for numerical solving. Once the problem is baked, it is
+    % no longer editable and setting properties will result in an error.{% if phases > 1 %}
+    problem.ConnectAllPhases();{% end %}
+    problem.Bake();
+
+end

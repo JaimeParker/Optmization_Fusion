@@ -1,0 +1,13 @@
+function [cost] = {{ name }}({% if ~isempty(outputs) %}outputs, {% end %}states, controls)
+    % constraint interface created by falcon.m
+
+    % extract all outputs / states / controls
+    {% for iOutput in 1:numel(outputs) %}{{ outputs{iOutput} }} = outputs({{ iOutput }});
+    {% end %}{% for iState in 1:numel(states) %}{{ states{iState} }} = states({{ iState }});
+    {% end %}{% for iControl in 1:numel(controls) %}{{ controls{iControl} }} = controls({{ iControl }});
+    {% end %}
+    % TODO - calculate cost
+    warning('TODO - cost {{ name }} not calculated yet');
+    cost = 0;
+
+end
