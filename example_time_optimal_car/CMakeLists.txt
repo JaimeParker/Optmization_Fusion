@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.10)
 project(example_time_optimal_car)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -21,6 +21,7 @@ if(NOT OpenCV_FOUND)
 endif()
 find_package(Pangolin REQUIRED)
 find_package(Ceres REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Core Gui Charts REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Quick REQUIRED)
@@ -48,4 +49,10 @@ target_link_libraries(${PROJECT_NAME}
         )
 
 # Examples
-add_executable(test Examples/test.cc)
+add_executable(test_example Examples/test.cc)
+
+add_executable(example_qt Examples/TestQt.cc
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/mainwindow.ui)
+target_link_libraries(example_qt Qt5::Widgets Qt5::Charts)
