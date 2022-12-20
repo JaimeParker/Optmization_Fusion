@@ -3,7 +3,6 @@
 //
 
 #include <QApplication>
-#include <iostream>
 #include "Map.h"
 #include <vector>
 #include <utility>
@@ -18,10 +17,11 @@ Map::Map(std::vector<std::pair<double, double>> &path1,
 
     int argc;
     char **argv;
-    //QtVisualization(argc, argv);
+    QtVisualization(argc, argv);
 }
 
 int Map::QtVisualization(int argc, char **argv) {
+    //TODO: To realize presenting both trajectories in one window
     QApplication qApplication(argc, argv);
 
     // init series
@@ -49,12 +49,4 @@ int Map::QtVisualization(int argc, char **argv) {
     window.resize(400, 400);
     window.show();
     return QApplication::exec();
-}
-
-void Map::test_vector(std::vector<std::pair<double, double>> &vec) {
-    std::cout << "hello" << std::endl;
-}
-
-void Map::test_again(std::vector<int> &vec) {
-    std::cout << "hello" << std::endl;
 }

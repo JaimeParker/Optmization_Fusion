@@ -1,8 +1,8 @@
 /**
  * @file Map.h
  * @author hazy parker
- * @brief to show map (use OpenCV for now, considering using Qt GUI in the future)
- * @version 0.1
+ * @brief to show map (use Qt Gui, instead of OpenCV)
+ * @version 0.2
  * @date 2022-12-11
  * 
  * This file tends to draw paths calculated by OpenCV,
@@ -39,11 +39,13 @@ public:
     std::vector<std::pair<double, double>> init_path;
     std::vector<std::pair<double, double>> optimized_path;
 
+    /**
+     * Qt Application Visualization
+     * @param argc
+     * @param argv
+     * @return Q Application
+     */
     int QtVisualization(int argc, char *argv[]);
-
-    static void test_vector(std::vector<std::pair<double, double> > &vec);
-
-    static void test_again(std::vector<int> &vec);
 
 };
 

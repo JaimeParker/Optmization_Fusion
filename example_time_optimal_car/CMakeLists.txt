@@ -52,7 +52,7 @@ add_executable(test_map Examples/test_map.cc
         src/mainwindow.cpp
         src/mainwindow.h
         src/mainwindow.ui)
-target_link_libraries(test_map Qt5::Widgets Qt5::Charts)
+target_link_libraries(test_map Qt5::Widgets Qt5::Charts ${PROJECT_NAME})
 
 add_executable(example_qt Examples/TestQt.cc
         src/mainwindow.cpp
