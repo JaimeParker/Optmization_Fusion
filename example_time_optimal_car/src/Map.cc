@@ -15,27 +15,31 @@ Map::Map(std::vector<std::pair<double, double>> &path1,
     init_path = path1;
     optimized_path = path2;
 
-    int argc;
+    int argc = 0;
     char **argv;
     QtVisualization(argc, argv);
 }
 
 int Map::QtVisualization(int argc, char **argv) {
-    //TODO: To realize presenting both trajectories in one window
     QApplication qApplication(argc, argv);
 
     // init series
     auto *series = new QtCharts::QLineSeries();
+    auto *series_opt = new QtCharts::QLineSeries();
 
     // set value
     for(auto & iter : init_path){
         series->append(iter.first, iter.second);
+    }
+    for(auto & iter_opt : optimized_path){
+        series_opt->append(iter_opt.first, iter_opt.second);
     }
 
     // init chart
     auto *chart = new QtCharts::QChart();
     chart->legend()->hide();
     chart->addSeries(series);
+    chart->addSeries(series_opt);
     chart->createDefaultAxes();
     chart->setTitle("Simple Map Example");
 

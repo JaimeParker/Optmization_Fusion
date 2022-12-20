@@ -37,3 +37,7 @@ These consists a demo code of Qt, tested on ubuntu18.04 with Qt5 on Clion and vs
 We can see the result of demo code:
 
 ![QtChartsDemo](./images/TestQtCharts.png)
+
+and add another series:
+
+![QtChart2Line](./images/QtCharts2Lines.png)
