@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.21)
 project(example_time_optimal_car)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-#set(CMAKE_PREFIX_PATH ~/Apps/Qt/Tools/QtCreator/lib)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -21,10 +20,7 @@ if(NOT OpenCV_FOUND)
 endif()
 find_package(Pangolin REQUIRED)
 find_package(Ceres REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Core Gui Charts REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Quick REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Core Gui Charts Quick REQUIRED)
 
 # include header file
 include_directories(
@@ -46,10 +42,17 @@ target_link_libraries(${PROJECT_NAME}
         ${OpenCV_LIBS}
         ${Pangolin_LIBRARIES}
         Qt5::Widgets
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Charts
         )
 
 # Examples
-add_executable(test_example Examples/test.cc)
+add_executable(test_map Examples/test_map.cc
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/mainwindow.ui)
+target_link_libraries(test_map Qt5::Widgets Qt5::Charts)
 
 add_executable(example_qt Examples/TestQt.cc
         src/mainwindow.cpp

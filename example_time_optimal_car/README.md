@@ -2,6 +2,10 @@
 
 some brief here ...
 
+## Dependency
+
+* Qt5
+
 ## C++ Class Introduction
 
 ### 1. Model

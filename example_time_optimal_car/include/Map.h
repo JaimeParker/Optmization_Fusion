@@ -21,21 +21,30 @@
 #include <opencv/cv.h>
 #include <opencv4/opencv2/core.hpp>
 #include <vector>
+#include <utility>
+#include "src/mainwindow.h"
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
 
 class Map{
 public:
     // constructor function
-    Map();
+    Map(std::vector<std::pair<double, double> > &path1,
+        std::vector<std::pair<double, double> > &path2);
 
     // params about picture
-    int resolution_rate;
 
     // params about path
     std::vector<std::pair<double, double>> init_path;
     std::vector<std::pair<double, double>> optimized_path;
 
-    // test draw line
-    void MapTest();
+    int QtVisualization(int argc, char *argv[]);
+
+    static void test_vector(std::vector<std::pair<double, double> > &vec);
+
+    static void test_again(std::vector<int> &vec);
+
 };
 
 #endif //EXAMPLE_TIME_OPTIMAL_CAR_MAP_H

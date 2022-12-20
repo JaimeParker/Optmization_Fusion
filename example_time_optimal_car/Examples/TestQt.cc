@@ -5,18 +5,36 @@
 #include <QtCharts/QChart>
 #include <QtCharts/QChartView>
 
+#include <vector>
+#include <cmath>
+#include <iostream>
+
+double func(double x){
+    return sin(3.1415926 * x);
+}
+
+void test_vector(std::vector<int> &vec){
+    std::cout << "vector performs normally";
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
     auto *series = new QtCharts::QLineSeries();
 
-    series->append(0, 6);
-    series->append(2, 4);
-    series->append(3, 8);
-    series->append(7, 4);
-    series->append(10, 5);
-    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
+    // two methods to set series
+    // series->append(0, 6);
+    // *series << QPointF(11, 1);
+
+    double x = 0;
+    for (int iter = 0; iter <= 1000; iter++){
+        series->append(x, func(x));
+        x += 0.01;
+    }
+
+    std::vector<int> vector;
+    test_vector(vector);
 
     auto *chart = new QtCharts::QChart();
     chart->legend()->hide();
@@ -29,7 +47,7 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+    window.resize(400, 400);
     window.show();
     return QApplication::exec();
 }
