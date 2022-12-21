@@ -2,9 +2,18 @@
 
 some brief here ...
 
+## Reference
+
+* [Practical Search Techniques in Path Planning for Autonomous Driving](https://ai.stanford.edu/~ddolgov/papers/dolgov_gpp_stair08.pdf)
+* [Hybrid A* Based Motion Planning for Autonomous Vehicles in Unstructured Environment](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8702779)
+* [Kinodynamic Planning by ETH](https://stanfordasl.github.io/wp-content/papercite-data/pdf/Schmerling.Pavone.EOR19.pdf)
+* [Kinodynamic Motion Planning by UC Berkeley](https://people.eecs.berkeley.edu/~jfc/papers/93/DXCRjacm93.pdf)
+* [【论文研读】路径规划中的Hybrid A*算法 ](https://zhuanlan.zhihu.com/p/161660932)
+
 ## Dependency
 
 * Qt5
+* `sudo apt install libqt5charts5-dev`
 
 ## C++ Class Introduction
 
