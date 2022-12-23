@@ -1,18 +1,28 @@
 #include "../include/Gui.hpp"
 
 GUI::GUI(int rows, int cols){
-	display_size=cv::Size(rows, cols);
-	display=Mat(display_size, CV_8UC3, Scalar(220,220,220));
+	display_size = cv::Size(rows, cols);
+	display = cv::Mat(display_size, CV_8UC3, Scalar(220,220,220));
 }
 
 void GUI::drawCar(State src){
-	RotatedRect rotRect = RotatedRect(Point2f(src.x*display_size.width/MAPX, src.y*display_size.height/MAPY), Size2f(BOT_L*display_size.width/MAPX, BOT_W*display_size.height/MAPY), src.theta*Theta_Res);
+	RotatedRect rotRect = RotatedRect(Point2f(src.x*display_size.width/MAPX,src.y*display_size.height/MAPY),
+                                      Size2f(BOT_L*display_size.width/MAPX, BOT_W*display_size.height/MAPY),
+                                      src.theta*Theta_Res);
 	Point2f vert[4];
 	rotRect.points(vert);
-	for(int i=0;i<4;i++)
-		line(display, vert[i], vert[(i+1)%4], Scalar(200, 0, 0));
 
-	circle(display, Point2f((src.x + 17*cos(src.theta*2.0*PI/Theta))*display_size.width/MAPX, (src.y + 17*sin(src.theta*2.0*PI/Theta))*display_size.width/MAPX), 5, Scalar(255, 0, 0));
+
+
+	for(int i=0;i<4;i++)
+        // TODO: No matching function for call to 'cvLine'
+		cvLine(display, vert[i], vert[(i+1)%4], Scalar(200, 0, 0));
+
+    // TODO: No matching function for call to 'cvCircle'
+	cvCircle(display, Point2f((src.x + 17*cos(src.theta*2.0*PI/Theta))*display_size.width/MAPX,
+                            (src.y + 17*sin(src.theta*2.0*PI/Theta))*display_size.width/MAPX),
+           5,
+           Scalar(255, 0, 0));
 }
 
 void GUI::drawObs(Map map){
