@@ -2,6 +2,9 @@
 
 some brief here ...
 
+* get an initial solution, using hybrid A*, or Dubins curve; solution includes the state variable and control variable at each point;
+* using SCP method to get a smoother path?
+
 ## Reference
 
 * [Practical Search Techniques in Path Planning for Autonomous Driving](https://ai.stanford.edu/~ddolgov/papers/dolgov_gpp_stair08.pdf)
@@ -9,6 +12,10 @@ some brief here ...
 * [Kinodynamic Planning by ETH](https://stanfordasl.github.io/wp-content/papercite-data/pdf/Schmerling.Pavone.EOR19.pdf)
 * [Kinodynamic Motion Planning by UC Berkeley](https://people.eecs.berkeley.edu/~jfc/papers/93/DXCRjacm93.pdf)
 * [【论文研读】路径规划中的Hybrid A*算法 ](https://zhuanlan.zhihu.com/p/161660932)
+* [karlkurzer](https://github.com/karlkurzer)/**[path_planner](https://github.com/karlkurzer/path_planner)**
+* [Hybrid A* ROS源码中文注释](https://github.com/teddyluo/hybrid-a-star-annotation)
+* [Dubins曲线详细笔记](https://zhuanlan.zhihu.com/p/414753861)
+* [航迹规划——Dubins曲线](https://www.guyuehome.com/17685)
 
 ## Dependency
 
