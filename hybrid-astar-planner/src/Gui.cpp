@@ -13,13 +13,11 @@ void GUI::drawCar(State src){
 	rotRect.points(vert);
 
 
+    for (int i = 0; i < 4; i++) {
+        line(display, vert[i], vert[(i + 1) % 4], Scalar(200, 0, 0));
+    }
 
-	for(int i=0;i<4;i++)
-        // TODO: No matching function for call to 'cvLine'
-		cvLine(display, vert[i], vert[(i+1)%4], Scalar(200, 0, 0));
-
-    // TODO: No matching function for call to 'cvCircle'
-	cvCircle(display, Point2f((src.x + 17*cos(src.theta*2.0*PI/Theta))*display_size.width/MAPX,
+	circle(display, Point2f((src.x + 17*cos(src.theta*2.0*PI/Theta))*display_size.width/MAPX,
                             (src.y + 17*sin(src.theta*2.0*PI/Theta))*display_size.width/MAPX),
            5,
            Scalar(255, 0, 0));

@@ -14,6 +14,7 @@ Map::Map(){
 
 	for(int i=0;i<MAPX;i++)
 		for(int j=0;j<MAPY;j++)
+            // TODO: SIGSEGV here
 			if(obsmap.at<uchar>(j/2,i/2)<=120)
 				obs_map[i][j]=1;
 			else
