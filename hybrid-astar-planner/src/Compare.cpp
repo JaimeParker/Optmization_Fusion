@@ -26,9 +26,9 @@ float Compare::holonomic_with_obs(State src){
 
 void Compare::runDijkstra(){
 
-	State src=Compare::target;
-	src.dx=src.gx*DX/GX;
-	src.dy=src.gy*DY/GY;
+	State src = Compare::target;
+	src.dx = src.gx*DX/GX;
+	src.dy = src.gy*DY/GY;
 	priority_queue<State, vector<State>, compare2dSignature> frontier(&compare2d);
 	int vis[DX][DY];
 
@@ -90,6 +90,7 @@ void Compare::runDijkstra(){
 			dist.at<Vec3d>(j,i)={255-0.6*shortest_2d[i][j], 200-0.6*shortest_2d[i][j], 200-0.6*shortest_2d[i][j]};
 		}
 
+    // TODO: debug here
 	resize(dist, dist, Size(400, 400));
 	//uncomment to check if dijkstra ran properly
 	//imshow("dist", dist);

@@ -10,12 +10,14 @@ Map::Map(){
 			obs_map[i][j]=0;
 	}
 
-	Mat obsmap=imread("maps/map3.png", 0);
+	Mat obsmap = imread("../maps/map3.png", 0);
+    if (!obsmap.empty()){
+        cout << "obstacle map read successfully!" << endl;
+    }
 
 	for(int i=0;i<MAPX;i++)
 		for(int j=0;j<MAPY;j++)
-            // TODO: SIGSEGV here
-			if(obsmap.at<uchar>(j/2,i/2)<=120)
+			if(obsmap.at<uchar>(j/2,i/2) <= 120)
 				obs_map[i][j]=1;
 			else
 				obs_map[i][j]=0;
