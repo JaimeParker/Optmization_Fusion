@@ -22,6 +22,10 @@ find_package(Pangolin REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Core Gui Charts Quick REQUIRED)
 
+# can be deleted
+find_package(BLAS REQUIRED)
+find_package(LAPACK REQUIRED)
+
 # include header file
 include_directories(
         ${PROJECT_SOURCE_DIR}
