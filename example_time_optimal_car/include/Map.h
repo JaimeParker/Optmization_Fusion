@@ -18,7 +18,10 @@
 #ifndef EXAMPLE_TIME_OPTIMAL_CAR_MAP_H
 #define EXAMPLE_TIME_OPTIMAL_CAR_MAP_H
 
-#include <opencv/cv.h>
+// for opencv 4.4
+//#include <opencv/cv.h>
+// for opencv 4.2
+#include <opencv2/opencv.hpp>
 #include <opencv4/opencv2/core.hpp>
 #include <vector>
 #include <utility>
