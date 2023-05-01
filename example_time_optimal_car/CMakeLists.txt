@@ -63,3 +63,9 @@ add_executable(example_qt Examples/TestQt.cc
         src/mainwindow.h
         src/mainwindow.ui)
 target_link_libraries(example_qt Qt5::Widgets Qt5::Charts)
+
+add_executable(test_window Examples/TestWindow.cc
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/mainwindow.ui)
+target_link_libraries(test_window Qt5::Widgets Qt5::Charts)

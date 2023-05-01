@@ -1,5 +1,3 @@
-#include "mainwindow.h"
-
 #include <QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtCharts/QChartView>
@@ -14,8 +12,16 @@ int main(int argc, char *argv[])
 //    MainWindow w;
 //    w.show();
 
-    QApplication a(argc, argv);
+    // get resolution of screen
+    QRect mRect;
+    mRect = QGuiApplication::primaryScreen()->geometry();
+    qDebug() << "width:" << mRect.width() << ",height:" << mRect.height();
+    int half_mWidth = mRect.width() / 2;
+    int half_mHeight = mRect.height() / 2;
 
+    QApplication qApplication(argc, argv);
+
+    // Qt charts
     QtCharts::QLineSeries *series = new QtCharts::QLineSeries();
 
     series->append(0, 6);
@@ -34,9 +40,16 @@ int main(int argc, char *argv[])
     QtCharts::QChartView *chartView = new QtCharts::QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
+    // Qt main window
     QMainWindow window;
+
+//    QWidget *centralWidget = new QWidget;
+//    window.setCentralWidget(centralWidget);
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+
+
+
+    window.resize(half_mWidth, half_mHeight);
     window.show();
-    return a.exec();
+    return qApplication.exec();
 }
