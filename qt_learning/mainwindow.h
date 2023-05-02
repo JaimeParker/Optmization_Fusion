@@ -31,12 +31,15 @@ public:
     // set thickness of path line
     void setPathLineThick(double thick) {path_line_thickness = thick;};
 
-    // set time interval
-    void setTimeInterval(double seconds = 0.1);
+    // draw dynamic path
+    void addDynamicPath(QVector<QPointF> &points, QPen pen, double interval);
 
 private:
     // pointer to ui file
     Ui::MainWindow *ui;
+
+    // scene for show
+    QGraphicsScene *m_scene;
 
     // map size, the map is set to be a square.
     // width = height
@@ -47,9 +50,6 @@ private:
 
     // the thickness of line drawing the path
     double path_line_thickness = 1;
-
-    // time interval for two points
-    QTimer m_timer;
 
 };
 #endif // MAINWINDOW_H

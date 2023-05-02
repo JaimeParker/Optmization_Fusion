@@ -17,54 +17,32 @@ MainWindow::~MainWindow()
 void MainWindow::setMapWidget()
 {
     // create a QGraphicsScene to hold the grid map
-    QGraphicsScene *scene = new QGraphicsScene(this);
+    m_scene = new QGraphicsScene(this);
     int *size = &map_size;
-    scene->setSceneRect(0, 0, *size, *size);
+    m_scene->setSceneRect(0, 0, *size, *size);
 
     // create the grid map
     int grid_size = 5;
-    for (int x = 0; x <= scene->width(); x += grid_size) {
-        scene->addLine(x, 0, x, scene->height(), QPen(Qt::gray, grid_line_thickness));
+    for (int x = 0; x <= m_scene->width(); x += grid_size) {
+        m_scene->addLine(x, 0, x, m_scene->height(), QPen(Qt::gray, grid_line_thickness));
     }
-    for (int y = 0; y <= scene->height(); y += grid_size) {
-        scene->addLine(0, y, scene->width(), y, QPen(Qt::gray, grid_line_thickness));
+    for (int y = 0; y <= m_scene->height(); y += grid_size) {
+        m_scene->addLine(0, y, m_scene->width(), y, QPen(Qt::gray, grid_line_thickness));
     }
 
     // Draw a line example
     QPen pen(Qt::black);
     pen.setWidth(path_line_thickness);
-    scene->addLine(0, 0, 500, 500, pen);
+    m_scene->addLine(0, 0, 500, 500, pen);
 
     // Draw a rect example
     QGraphicsRectItem *rectItem = new QGraphicsRectItem(50, 50, 100, 100);
     rectItem->setPen(QPen(Qt::blue));
     rectItem->setBrush(QBrush(Qt::blue));
-    scene->addItem(rectItem);
-
-    // Draw a dynamic line example
-    QGraphicsLineItem *lineItem = new QGraphicsLineItem();
-    lineItem->setPen(pen);
-    scene->addItem(lineItem);
-
-//    QVector<QPointF> points = {QPointF(10,10), QPointF(50,100), QPointF(200,50), QPointF(400,400)};
-
-    QTimer timer;
-    // Set a timeout for the timer (in milliseconds)
-//    timer->setSingleShot(true);
-    timer.setInterval(1000); // 1000ms = 1 second
-
-    // Connect the timeout signal to a slot function
-    connect(&timer, &QTimer::timeout, this, [=]() {
-        // This code will be executed after the delay has passed
-        qDebug() << "Delay is over!";
-
-    });
-
-    // Start the timer
-    timer.start();
+    m_scene->addItem(rectItem);
 
     // create a QGraphicsView to display the grid map
-    QGraphicsView *view = new QGraphicsView(scene);
+    QGraphicsView *view = new QGraphicsView(m_scene);
     view->setRenderHint(QPainter::Antialiasing);
     view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
@@ -74,9 +52,39 @@ void MainWindow::setMapWidget()
     layout->addWidget(view);
     mapWidget->setLayout(layout);
 
+    // dynamic path test
+    QVector<QPointF> points;
+    for (int x = 0; x < *size; x++){
+        points.append(QPointF(x, x + 20 * sin(0.1 * x)));
+    }
+    addDynamicPath(points, pen, 0.01);
+
 }
 
-void MainWindow::setTimeInterval(double seconds)
+void MainWindow::addDynamicPath(QVector<QPointF> &points, QPen pen, double interval)
 {
-    m_timer.setInterval(1000 * seconds);
+    // Create a QGraphicsPathItem to hold the line
+    QGraphicsPathItem *lineItem = new QGraphicsPathItem();
+    lineItem->setPen(pen);
+    m_scene->addItem(lineItem);
+
+    QPainterPath path;
+
+    // Create a list of points for the line
+    int pointIndex = 0;
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [=]() mutable {
+        if (pointIndex < points.size() - 1) {
+            QPointF startPoint = points[pointIndex];
+            QPointF endPoint = points[pointIndex + 1];
+            path.lineTo(endPoint);
+            lineItem->setPath(path);
+            pointIndex++;
+        } else {
+            timer->stop();
+            qDebug("timer stopped");
+        }
+    });
+    path.moveTo(points[0]);
+    timer->start(1000 * interval);
 }
