@@ -20,7 +20,11 @@ if(NOT OpenCV_FOUND)
 endif()
 find_package(Pangolin REQUIRED)
 find_package(Ceres REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Core Gui Charts Quick REQUIRED)
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Charts)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts)
+
+
 
 # can be deleted
 find_package(BLAS REQUIRED)
@@ -48,24 +52,13 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         Qt5::Core
         Qt5::Gui
-        Qt5::Charts
         )
 
 # Examples
-add_executable(test_map Examples/test_map.cc
-        src/mainwindow.cpp
-        src/mainwindow.h
-        src/mainwindow.ui)
-target_link_libraries(test_map Qt5::Widgets Qt5::Charts ${PROJECT_NAME})
-
 add_executable(example_qt Examples/TestQt.cc
         src/mainwindow.cpp
         src/mainwindow.h
         src/mainwindow.ui)
-target_link_libraries(example_qt Qt5::Widgets Qt5::Charts)
-
-add_executable(test_window Examples/TestWindow.cc
-        src/mainwindow.cpp
-        src/mainwindow.h
-        src/mainwindow.ui)
-target_link_libraries(test_window Qt5::Widgets Qt5::Charts)
+target_link_libraries(example_qt PRIVATE
+        Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Charts)

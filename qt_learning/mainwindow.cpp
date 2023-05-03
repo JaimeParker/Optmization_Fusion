@@ -1,12 +1,16 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "mapwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // set mapWidget content
     setMapWidget();
+
 }
 
 MainWindow::~MainWindow()
@@ -47,10 +51,14 @@ void MainWindow::setMapWidget()
     view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     // add the QGraphicsView to the mapWidget
-    QWidget *mapWidget = ui->mapWidget;
+//    QWidget *mapWidget = ui->mapWidget;
+//    mapWidget->setLayout(layout);
     QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(view);
-    mapWidget->setLayout(layout);
+
+    m_mapWidget = new MapWidget(ui->mapWidget);
+    m_mapWidget->setLayout(layout);
+
 
     // dynamic path test
     QVector<QPointF> points;
@@ -88,3 +96,55 @@ void MainWindow::addDynamicPath(QVector<QPointF> &points, QPen pen, double inter
     path.moveTo(points[0]);
     timer->start(1000 * interval);
 }
+
+
+void MainWindow::on_pushButton_Exe_clicked()
+{
+    // this function is used to call main planning
+    qDebug("developing, please stand by");
+}
+
+
+void MainWindow::on_pushButton_setstart_clicked()
+{
+    qDebug("set start button is clicked!");
+
+    // get clicked pos and show
+    QPoint lastClickPos = m_mapWidget->getLastClickPos();
+    m_start2d.first = lastClickPos.x();
+    m_start2d.second = lastClickPos.y();
+    qDebug() << "in SLOT start, Last click position:" << lastClickPos;
+    QString str = QString("(%1, %2)").
+            arg(QString::number(lastClickPos.x()), QString::number(lastClickPos.y()));
+    QLabel *label_start = ui->label_start;
+    label_start->setText(str);
+
+    // get info from plain text edit
+    QPlainTextEdit *m_textEdit = ui->plainTextEdit_start;
+    QString angle_str = m_textEdit->toPlainText();
+    qDebug() << "get from plaintext(start):" << angle_str;
+    m_angle_start = angle_str.toInt();
+}
+
+
+void MainWindow::on_pushButton_setGoal_clicked()
+{
+    qDebug("set goal button is clicked!");
+
+    // get clicked pos and show
+    QPoint lastClickPos = m_mapWidget->getLastClickPos();
+    m_goal2d.first = lastClickPos.x();
+    m_goal2d.second = lastClickPos.y();
+    qDebug() << "in SLOT goal, Last click position:" << lastClickPos;
+    QString str = QString("(%1, %2)").
+            arg(QString::number(lastClickPos.x()), QString::number(lastClickPos.y()));
+    QLabel *label_goal = ui->label_goal;
+    label_goal->setText(str);
+
+    // get info from plain text edit
+    QPlainTextEdit *m_textEdit = ui->plainTextEdit_start;
+    QString angle_str = m_textEdit->toPlainText();
+    qDebug() << "get from plaintext(goal):" << angle_str;
+    m_angle_goal = angle_str.toInt();
+}
+

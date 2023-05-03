@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>551</width>
-      <height>531</height>
+      <width>500</width>
+      <height>500</height>
      </rect>
     </property>
    </widget>
@@ -61,6 +61,123 @@
     </property>
     <property name="title">
      <string>Parameters</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_setstart">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>70</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>set start</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_setGoal">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>set goal</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_start">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>start point pos</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_goal">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>150</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>goal point pos</string>
+     </property>
+    </widget>
+    <widget class="QPlainTextEdit" name="plainTextEdit_start">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>30</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="plainText">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_text1">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>set heading angle</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_text2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>set heading angle</string>
+     </property>
+    </widget>
+    <widget class="QPlainTextEdit" name="plainTextEdit_goal">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>110</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="plainText">
+      <string>0</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Exe">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>530</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Execute!</string>
     </property>
    </widget>
   </widget>
