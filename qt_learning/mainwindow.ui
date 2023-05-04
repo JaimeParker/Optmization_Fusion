@@ -166,6 +166,19 @@
       <string>0</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_addRect">
+     <property name="geometry">
+      <rect>
+       <x>38</x>
+       <y>200</y>
+       <width>151</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>add rect obstacle</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_Exe">
     <property name="geometry">

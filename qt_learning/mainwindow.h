@@ -49,6 +49,9 @@ private slots:
     // call when button set goal is clicked
     void on_pushButton_setGoal_clicked();
 
+    // call when button set rect obstacle is clicked
+    void on_pushButton_addRect_clicked();
+
 private:
     // pointer to ui file
     Ui::MainWindow *ui;

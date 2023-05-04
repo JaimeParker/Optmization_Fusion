@@ -35,15 +35,15 @@ void MainWindow::setMapWidget()
     }
 
     // Draw a line example
-    QPen pen(Qt::black);
-    pen.setWidth(path_line_thickness);
-    m_scene->addLine(0, 0, 500, 500, pen);
+//    QPen pen(Qt::black);
+//    pen.setWidth(path_line_thickness);
+//    m_scene->addLine(0, 0, 500, 500, pen);
 
     // Draw a rect example
-    QGraphicsRectItem *rectItem = new QGraphicsRectItem(50, 50, 100, 100);
-    rectItem->setPen(QPen(Qt::blue));
-    rectItem->setBrush(QBrush(Qt::blue));
-    m_scene->addItem(rectItem);
+//    QGraphicsRectItem *rectItem = new QGraphicsRectItem(50, 50, 100, 100);
+//    rectItem->setPen(QPen(Qt::blue));
+//    rectItem->setBrush(QBrush(Qt::blue));
+//    m_scene->addItem(rectItem);
 
     // create a QGraphicsView to display the grid map
     QGraphicsView *view = new QGraphicsView(m_scene);
@@ -65,7 +65,7 @@ void MainWindow::setMapWidget()
     for (int x = 0; x < *size; x++){
         points.append(QPointF(x, x + 20 * sin(0.1 * x)));
     }
-    addDynamicPath(points, pen, 0.01);
+//    addDynamicPath(points, pen, 0.01);
 
 }
 
@@ -124,6 +124,11 @@ void MainWindow::on_pushButton_setstart_clicked()
     QString angle_str = m_textEdit->toPlainText();
     qDebug() << "get from plaintext(start):" << angle_str;
     m_angle_start = angle_str.toInt();
+
+    // set status bar info
+    auto *status = ui->statusbar;
+    QString str_message = "start point set! ";
+    status->showMessage(str_message + str + ", with heading angle of " + angle_str + " degrees.");
 }
 
 
@@ -146,5 +151,30 @@ void MainWindow::on_pushButton_setGoal_clicked()
     QString angle_str = m_textEdit->toPlainText();
     qDebug() << "get from plaintext(goal):" << angle_str;
     m_angle_goal = angle_str.toInt();
+
+    // set status bar info
+    auto *status = ui->statusbar;
+    QString str_message = "goal point set! ";
+    status->showMessage(str_message + str + ", with heading angle of " + angle_str + "degrees.");
+}
+
+void MainWindow::on_pushButton_addRect_clicked()
+{
+    qDebug("set rect button is clicked");
+
+    QPoint left_up_pos = m_mapWidget->getLastClickPos();
+    QPoint right_down_pos = m_mapWidget->getLastReleasePos();
+
+    int rect_length = abs(left_up_pos.x() - right_down_pos.x());
+    int rect_width = abs(left_up_pos.y() - right_down_pos.y());
+
+    auto *rect = new QGraphicsRectItem(left_up_pos.x(), left_up_pos.y(),
+                                   rect_length, rect_width);
+    rect->setBrush(QBrush(Qt::blue));
+    m_scene->addItem(rect);
+
+    // set status bar info
+    auto *status = ui->statusbar;
+    status->showMessage("successfully added a rect obstacle!");
 }
 
