@@ -97,6 +97,13 @@ void MainWindow::addDynamicPath(QVector<QPointF> &points, QPen pen, double inter
     timer->start(1000 * interval);
 }
 
+void MainWindow::initializeMap()
+{
+    // TODO: fix this stupid bug
+    vec2d grid_map(map_size, std::vector<int>(map_size, 1));
+    occupancy_grid_map = grid_map;
+}
+
 
 void MainWindow::on_pushButton_Exe_clicked()
 {

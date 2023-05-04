@@ -1,6 +1,5 @@
-#include "src/mainwindow.h"
+#include "mainwindow.h"
 #include <QApplication>
-#include <QtWidgets/QMainWindow>
 
 int main(int argc, char *argv[])
 {

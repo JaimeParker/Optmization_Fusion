@@ -7,6 +7,7 @@
 #include "mapwidget.h"
 
 using pos2d = std::pair<int, int>;
+using vec2d = std::vector<std::vector<int>>;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +38,9 @@ public:
 
     // draw dynamic path
     void addDynamicPath(QVector<QPointF> &points, QPen pen, double interval);
+
+    // initialize grid map
+    void initializeMap();
 
 
 private slots:
@@ -83,6 +87,11 @@ private:
 
     // goal point position
     pos2d m_goal2d = {10, 10};
+
+    // init grid map
+    vec2d occupancy_grid_map;
+//    vec2d aaa(map_size, std::vector<int>(map_size));
+    // why is this wrong?
 
 };
 #endif // MAINWINDOW_Hi

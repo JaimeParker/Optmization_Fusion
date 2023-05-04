@@ -42,7 +42,8 @@ include_directories(
 add_library(${PROJECT_NAME} SHARED
         src/Model.cc
         src/Map.cc
-        src/Initializer.cc)
+        src/Initializer.cc
+        src/Astar2d.cc)
 
 # target link libraries
 target_link_libraries(${PROJECT_NAME}
@@ -57,8 +58,18 @@ target_link_libraries(${PROJECT_NAME}
 # Examples
 add_executable(example_qt Examples/TestQt.cc
         src/mainwindow.cpp
-        src/mainwindow.h
-        src/mainwindow.ui)
+        include/mainwindow.h
+        src/mapwidget.cpp
+        include/mapwidget.h
+        src/mainwindow.ui
+        src/Astar2d.cc
+        include/Astar2d.h)
 target_link_libraries(example_qt PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
-        Qt${QT_VERSION_MAJOR}::Charts)
+        Qt${QT_VERSION_MAJOR}::Charts
+        ${OpenCV_LIBS})
+
+add_executable(TestAStar2D Examples/TestAstar.cc
+        src/Astar2d.cc
+        include/Astar2d.h)
+target_link_libraries(TestAStar2D ${OpenCV_LIBS})
