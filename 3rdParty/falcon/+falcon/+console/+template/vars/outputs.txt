@@ -1,9 +1,0 @@
-function outputs = outputs()
-    % The outputs are computed from the model functions by falcon like y = c(x, u, t, p).
-    % You can also use outputs as inputs to path or point constraint functions. E.g. add
-    % a path constraint on the load factor n, which would be an output from the model.
-
-    outputs = [{%for output in outputs %}
-        falcon.Output('{{ output }}', -inf, +inf, 1, 0);{% end %}
-    ];
-end

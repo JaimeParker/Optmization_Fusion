@@ -1,8 +1,0 @@
-function [{{ strjoin(outputs, ', ') }}] = {{ name }}({{ strjoin(inputs, ', ') }})
-    % model interface created by falcon.m
-
-    % TODO calculate the outputs
-    warning('TODO - model {{ name }} is not implemented yet');{% for output in outputs %}
-    {{ output }} = 0;{% end %}
-
-end

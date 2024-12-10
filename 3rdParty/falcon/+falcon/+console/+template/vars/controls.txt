@@ -1,9 +1,0 @@
-function controls = controls()
-    % The controls for the optimization problem that will be optimized.
-    % It should be a column vector of falcon.Control objects. You can
-    % specify lower & upper bounds and tune scaling & offset.
-
-    controls = [{%for control in controls %}
-        falcon.Control('{{ control }}', -inf, +inf, 1, 0);{% end %}
-    ];
-end
