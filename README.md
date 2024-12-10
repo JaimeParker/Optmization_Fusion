@@ -1,5 +1,5 @@
-# Optmization_Fusion
-a summary of optmization methods
+# Planning Gallery
+a summary of planning methods
 
 ## reference
 
